@@ -16,8 +16,8 @@ export default function ClientComponent() {
   const handleDecode = async (result: any) => {
     try {
       const contacts = await fetchContacts(result);
-      const contactName = contacts[0]?.name as string | null;
-      setName(contactName);
+      const contactName = contacts![0].name as string | null;
+      setName(contactName!);
     } catch (error) {
       console.log(error);
     }
