@@ -4,7 +4,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import { useState } from 'react';
 
-async function fetchContacts(id) {
+async function fetchContacts(id: any) {
   const supabase = createClientComponentClient();
   const { data } = await supabase.from('contacts').select().eq('id', id);
   return data;
@@ -13,16 +13,17 @@ async function fetchContacts(id) {
 export default function ClientComponent() {
   const [name , setName] = useState('');
 
-  const handleDecode = async (result) => {
+  const handleDecode = async (result: any) => {
     try {
       const contacts = await fetchContacts(result);
-      setName(contacts[0].name);
+      const contactName = contacts[0]?.name as string | null;
+      setName(contactName);
     } catch (error) {
-      console.log(error?.message);
+      console.log(error);
     }
   };
 
-  const handleError = (error) => {
+  const handleError = (error: { message: any; }) => {
     console.log(error?.message);
   };
 
