@@ -4,12 +4,19 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import { useState } from 'react';
 
-async function fetchContacts(id: any) {
-  const supabase = createClientComponentClient();
-  const { data } = await supabase.from('contacts').select().eq('id', id);
-  return data;
+async function fetchContacts(id: string) {
+  if (!id || id === '' || id === undefined) {
+    throw new Error('Invalid id parameter');
+  }
+  try {
+    const supabase = createClientComponentClient();
+    const { data } = await supabase.from('contacts').select().eq('id', id);
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }
-
 export default function ClientComponent() {
   const [name , setName] = useState('');
 
@@ -29,13 +36,17 @@ export default function ClientComponent() {
 
   return (
   <>
-    <div className='w-1/2'>
+
+    { name === '' ? 
+    <div className='w-full lg:w-1/2'>
+    <h1 className='text-4xl text-center'>Scan QR Code</h1>
     <QrScanner
       onDecode={handleDecode}
       onError={handleError}
     />
     </div>
-    <p className='text-2xl'>Name: {name}</p>
+    : <p className='text-2xl'>Name: {name}</p>
+  }
   </>
   );
 }
