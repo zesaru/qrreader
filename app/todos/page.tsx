@@ -3,6 +3,9 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { QrScanner } from '@yudiel/react-qr-scanner';
 import { useState } from 'react';
+import { redirect } from 'next/navigation'
+
+
 
 async function fetchContacts(id: string) {
   const supabase = createClientComponentClient();
@@ -26,7 +29,9 @@ export default function ClientComponent() {
   const handleDecode = async (result: any) => {
     try {
       const contacts = await fetchContacts(result);
-      const contactName = contacts![0].name as string | null;
+      const name = contacts![0].name as string | null;
+      const last_name = contacts![0].last_name as string | null;
+      const contactName = name + ' ' + last_name;
       setName(contactName!);
     } catch (error) {
       console.log(error);
@@ -35,6 +40,11 @@ export default function ClientComponent() {
 
   const handleError = (error: { message: any; }) => {
     console.log(error?.message);
+  };
+
+  const handleClick = () => {
+    setName('');
+    redirect('/todos');
   };
 
   return (
@@ -47,7 +57,11 @@ export default function ClientComponent() {
       onError={handleError}
     />
     </div>
-    : <p className='text-2xl'>Name: {name}</p>
+    : <>
+    <p className='text-2xl p-4'>Name: {name}</p>
+      <button className='bg-green-600 p-4 white font-bold text-white' onClick={handleClick}>Back</button>
+    </>
+
   }
   </>
   );
