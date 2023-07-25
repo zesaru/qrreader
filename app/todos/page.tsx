@@ -5,12 +5,15 @@ import { QrScanner } from '@yudiel/react-qr-scanner';
 import { useState } from 'react';
 
 async function fetchContacts(id: string) {
+  const supabase = createClientComponentClient();
+  
   if (!id || id === '' || id === undefined) {
     throw new Error('Invalid id parameter');
   }
   try {
-    const supabase = createClientComponentClient();
-    const { data } = await supabase.from('contacts').select().eq('id', id);
+    console.log('id'+id) 
+    const { data } = await supabase.from('contacts').select().eq('qr_code', id);
+    console.log(data)
     return data;
   } catch (error) {
     console.log(error);
@@ -36,7 +39,6 @@ export default function ClientComponent() {
 
   return (
   <>
-
     { name === '' ? 
     <div className='w-full lg:w-1/2'>
     <h1 className='text-4xl text-center'>Scan QR Code</h1>
