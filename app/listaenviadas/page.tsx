@@ -10,10 +10,11 @@ interface Contacts {
 	name: string;
 	last_name: string;
     organization: string;
+    title: string;
 	is_vip: boolean;
 	is_invited: boolean;
     qr_code: string;	
-    
+    invitation_date: string;
 }
 
 
@@ -28,8 +29,8 @@ const Listado = () => {
 		let { data } = await supabase
 			.from('contacts')
 			.select('*')
-            .eq('is_invited', true);
-			//.order('inserted_at', { ascending: false });
+            .eq('is_invited', true)
+			.order('invitation_date', { ascending: false });
 		setContacts(data || []);
 	};
 
@@ -38,29 +39,38 @@ const Listado = () => {
 	}, []);
 
     return ( 
-        <table>
-            <thead>
+<div className="flex flex-col">
+  <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+      <div className="overflow-hidden"></div>        
+        <table className="min-w-full text-left text-sm font-light">
+            <thead className="border-b bg-white font-medium dark:border-neutral-500 dark:bg-neutral-600">
                 <tr>
-                    <th>Vocative</th>
-                    <th>Name</th>
-                    <th>Last Name</th>
-                    <th>QR Code</th>
+                    <th scope="col" className="px-6 py-4">Invitation date</th>
+                    <th scope="col" className="px-6 py-4">VIP</th>
+                    <th scope="col" className="px-6 py-4">Name</th>                    
+                    <th scope="col" className="px-6 py-4">Organization</th>
+                    <th scope="col" className="px-6 py-4">Title</th>
                 </tr>
             </thead>
             <tbody>
                 {contacts.map((contact) => (
-                    <tr key={contact.qr_code}>
-                        <td>{contact.vocative}</td>
-                        <td>{contact.name}</td>
-                        <td>{contact.last_name}</td>
-                        <td>{contact.qr_code}</td>
+                    <tr className="border-b bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700" key={contact.qr_code}>
+                        <td className="whitespace-nowrap px-6 py-4 font-medium">{contact.invitation_date }</td>
+                        <td className="whitespace-nowrap px-6 py-4 bg-green-700 text-white font-medium">{contact.is_vip ? 'Yes' : 'No'}</td>
+                        <td className="whitespace-nowrap px-6 py-4">{contact.vocative} {contact.name} {contact.last_name}</td>
+                        <td className="whitespace-nowrap px-6 py-4">{contact.organization}</td>
+                        <td className="whitespace-nowrap px-6 py-4">{contact.title}</td>
+                        
                     </tr>
                 ))}
             </tbody>
                 
             
         </table>
-
+</div>
+</div>
+</div>
      );
 }
  
