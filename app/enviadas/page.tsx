@@ -16,6 +16,9 @@ async function fetchContacts(id: string) {
   try {
     console.log('id'+id) 
     const { data } = await supabase.from('contacts').select().eq('qr_code', id);
+    const  send  = await supabase.from('contacts').update({ is_invited: true }).eq('qr_code', id)
+    .select()
+    console.log(send)
     return data;
   } catch (error) {
 
@@ -43,7 +46,7 @@ export default function ClientComponent() {
 
   const handleClick = () => {
     setName('');
-    redirect('/todos');
+    redirect('/enviadas');
   };
 
   return (
