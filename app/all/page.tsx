@@ -7,6 +7,7 @@ import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 interface Contacts {
 	id: string;
+    created_at: Date;
     vocative: string;
 	name: string;
 	last_name: string;
@@ -30,6 +31,7 @@ const Listado = () => {
 		let { data } = await supabase
 			.from('contacts')
 			.select('*')
+            .order('created_at', { ascending: false });
 		setContacts(data || []);
 	};
 
@@ -39,6 +41,7 @@ const Listado = () => {
 
     return ( 
 <div className="flex flex-col">
+    
   <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
       <div className="overflow-hidden"></div>        
