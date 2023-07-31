@@ -1,5 +1,10 @@
 "use client"
 
+import {
+    createServerActionClient,
+    createServerComponentClient,
+  } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useEffect, useState } from 'react';
 
@@ -40,6 +45,7 @@ const Listado = () => {
 
     return ( 
 <div className="flex flex-col">
+<p>{contacts.length}</p>
   <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
       <div className="overflow-hidden"></div>        
