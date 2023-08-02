@@ -58,21 +58,25 @@ const Listado = () => {
         <table className="min-w-full text-left text-sm font-light" ref={tableRef}>
             <thead className="border-b bg-white font-medium dark:border-neutral-500 dark:bg-neutral-600">
                 <tr>
-                    <th scope="col" className="px-6 py-4">id</th>
                     <th scope="col" className="px-6 py-4">VIP</th>
                     <th scope="col" className="px-6 py-4">Name</th>                    
                     <th scope="col" className="px-6 py-4">Organization</th>
+                    <th scope="col" className="px-6 py-4">Title</th>                        
                     <th scope="col" className="px-6 py-4">QR</th>
+                    <th scope="col" className="px-6 py-4">Invited</th>
+                    <th scope="col" className="px-6 py-4">Invitation date</th>
                 </tr>
             </thead>
             <tbody>
                 {contacts.map((contact) => (
                     <tr className="border-b bg-neutral-100 dark:border-neutral-500 dark:bg-neutral-700" key={contact.qr_code}>
-                        <td className="whitespace-nowrap px-6 py-4">{contact.id}</td>
                         <td className="whitespace-nowrap px-6 py-4 bg-green-700 text-white font-medium">{contact.is_vip ? 'Yes' : 'No'}</td>
                         <td className="whitespace-nowrap px-6 py-4">{contact.vocative} {contact.name} {contact.last_name}</td>
+                        <td className="whitespace-nowrap px-6 py-4">{contact.title}</td>
                         <td className="whitespace-nowrap px-6 py-4">{contact.organization}</td>
                         <td className="whitespace-nowrap px-6 py-4">{contact.qr_code}</td>
+                        <td className="whitespace-nowrap px-6 py-4">{contact.is_invited? 'true' : 'false'}</td>
+                        <td className="whitespace-nowrap px-6 py-4">{contact.invitation_date}</td>
 
                     </tr>
                 ))}
