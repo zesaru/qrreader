@@ -1,5 +1,3 @@
-// TODO: Duplicate or move this file outside the `_examples` folder to make it a route
-
 import {
   createServerActionClient,
   createServerComponentClient,

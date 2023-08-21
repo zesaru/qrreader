@@ -14,11 +14,9 @@ async function fetchContacts(id: string) {
     throw new Error('Invalid id parameter');
   }
   try {
-    console.log('id'+id) 
     const { data } = await supabase.from('contacts').select().eq('qr_code', id);
     const  send  = await supabase.from('contacts').update({ is_invited: true, invitation_date:(((new Date()).toISOString())) }).eq('qr_code', id)
     .select()
-    console.log(send)
     return data;
   } catch (error) {
 
