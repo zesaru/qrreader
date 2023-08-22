@@ -1,12 +1,15 @@
 import {createServerComponentClient} from '@supabase/auth-helpers-nextjs'
 import {cookies} from 'next/headers'
 import {redirect} from 'next/navigation'
-import Contact from '../../components/ui/contact';
+import ContactsTables from '../../components/ui/contacts-table';
+import { type Database } from '../../types/database'
+
 
 export default async function Index() {
-    const supabase = createServerComponentClient({cookies})
-    const {data:contacts } = await supabase.from('contacts').select('id, name, last_name')
+    const supabase = createServerComponentClient<Database>({cookies})
+    const {data:contacts } = await supabase.from('contacts').select('*').eq('is_entered', true).order('is_vip', { ascending: true })
 
+    
     const {
         data: { user },
       } = await supabase.auth.getUser()
@@ -21,13 +24,7 @@ export default async function Index() {
 
 
         <main className='flex min-h-screen flex-col items-center justify-between p-2'>
-            <Contact />
-            {/* <pre>
-                {
-                  JSON.stringify(contacts, null, 4)
-                }
-            </pre> */}
-            
+            <ContactsTables contacts={contacts}/>
         </main>
     ) 
 }
