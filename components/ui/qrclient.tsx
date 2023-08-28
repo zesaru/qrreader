@@ -6,6 +6,7 @@ import { useState } from "react";
 import { redirect } from "next/navigation";
 import { Contact } from "../../types/contacts";
 import Link from "next/link";
+import {updataContact } from "@/app/actions/update-contacts-action";
 
 async function fetchContacts(id: string) {
   const supabase = createClientComponentClient();
@@ -47,12 +48,12 @@ export default function ClientComponent() {
   };
 
   const markAsEntered = async () => {
-    await fetch(`http://localhost:3000/contacts`, {
-      method: "put",
-      body: JSON.stringify({ id: contact[0].id }),
-    });
-  }
-
+     await updataContact(contact[0].qr_code)
+     setContact({} as Contact[]);
+     setToglee(true);
+     //redirect("/test");
+  };
+  
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
       <Link

@@ -36,8 +36,11 @@ export default function ContactsTable({
   return (
     <>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <div className="text-xs text-gray-700 uppercase">
-          total {contacts?.filter((contact) => contact.is_vip).length}
+        <div className="flex justify-around	text-normal text-gray-700 uppercase px-2">
+          <div className="px-1 text-base">VIP <span className="font-semibold">{contacts?.filter((contact) => contact.is_vip).length}</span></div>
+          <div className="px-1 text-base">NO VIP <span className="font-semibold">{contacts?.filter((contact) => !contact.is_vip).length}</span></div>
+          <div className="px-1 text-base">TOTAL <span className="font-semibold">{contacts?.length}</span></div>
+
         </div>
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -56,15 +59,15 @@ export default function ContactsTable({
                 >
                   <th
                     scope="row"
-                    className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                    className="flex items-center px-6 py-1 text-gray-900 whitespace-nowrap dark:text-white"
                   >
                     <div className="pl-1">
                       <div className="flex items-center">
-                        <div className="font-semibold h-2.5 w-2.5 rounded-full bg-green-500"></div>
-                        <div className="text-base flex my-1 ">
+                        <div className="font-normal text-sm h-2.5 w-2.5 rounded-full bg-green-500"></div>
+                        <div className="text-sm flex my-1 ">
                           {contact.vocative} {contact.name?.split(" ", 1)} {contact.last_name?.split(" ", 1)}
                         </div>
-                        <div className="text-base text-red-700">{contact.is_vip ? "VIP" : ""}</div>
+                        <div className="text-sm text-red-700">{contact.is_vip && "VIP"}</div>
                       </div>
                       <div className="font-normal text-gray-500 ">
                         {contact.organization}
