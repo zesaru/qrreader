@@ -22,6 +22,8 @@ async function fetchContacts(id: string) {
   }
 }
 export default function ClientComponent() {
+  const supabase = createClientComponentClient();
+
   const [contact, setContact] = useState({} as Contact[]);
   const [toglee, setToglee] = useState(true);
 
@@ -43,6 +45,13 @@ export default function ClientComponent() {
     setToglee(true);
     redirect("/test");
   };
+
+  const markAsEntered = async () => {
+    await fetch(`http://localhost:3000/contacts`, {
+      method: "put",
+      body: JSON.stringify({ id: contact[0].id }),
+    });
+  }
 
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
@@ -101,13 +110,51 @@ export default function ClientComponent() {
           </div>
         </>
       )}
-      {contact.length > 0 && (
+      {contact.length > 0 && !contact[0].is_entered && (
         <div>
-          <p className="text-xl">{contact[0].vocative} {contact[0].name} {contact[0].last_name}</p>
-          {contact[0].is_vip && <span className="text-xl bg-green-600 text-white text-center p-1">VIP</span> }
+          <p className="text-xl">
+            {contact[0].vocative} {contact[0].name} {contact[0].last_name}
+          </p>
+          {contact[0].is_vip && (
+            <span className="text-xl bg-green-600 text-white text-center p-1">
+              VIP
+            </span>
+          )}
           <p className="text-xl"> {contact[0].organization}</p>
           <p className="text-xl"> {contact[0].title}</p>
+          <p className="text-xl"> {contact[0].is_entered}</p>
+          <p className="text-xl"> {contact[0].entered_num}</p>
+          <div className="text-center">
+            <button
+              className="bg-green-600 p-4 white font-bold text-white"
+              onClick={ markAsEntered }
+            >
+              Ingresar invitado
+            </button>
+          </div>
         </div>
+      )}
+      {contact.length > 0 && contact[0].is_entered && (
+        <>
+          {" "}
+          <div
+            className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+            role="alert"
+          >
+            <span className="font-xl"> Alerta!</span> El invitado{" "}
+            {contact[0].vocative} {contact[0].name} {contact[0].last_name} ya
+            ingres
+          </div>
+          <div className="text-center">
+            <p className="text-2xl p-4"> </p>
+            <button
+              className="bg-green-600 p-4 white font-bold text-white"
+              onClick={handleClick}
+            >
+              Regresar a escanear otro codigo
+            </button>
+          </div>
+        </>
       )}
     </div>
   );

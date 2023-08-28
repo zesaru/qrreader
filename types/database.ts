@@ -23,7 +23,7 @@ export interface Database {
           last_name: string | null
           name: string
           organization: string | null
-          qr_code: string | null
+          qr_code: string
           title: string | null
           vocative: string | null
         }
