@@ -15,7 +15,7 @@ async function fetchContacts(id: string) {
     throw new Error("Invalid id parameter");
   }
   try {
-    const { data } = await supabase.from("contacts").select().eq("qr_code", id);
+    const { data } = await supabase.from("contacts").select().eq("qr_code", id).eq('is_invited', true);
     return data;
   } catch (error) {
     console.log(error);
@@ -51,7 +51,6 @@ export default function ClientComponent() {
      await updataContact(contact[0].qr_code)
      setContact({} as Contact[]);
      setToglee(true);
-     //redirect("/test");
   };
   
   return (
@@ -113,6 +112,15 @@ export default function ClientComponent() {
       )}
       {contact.length > 0 && !contact[0].is_entered && (
         <div>
+          <p>
+          {contact[0].num_confirmation >= 1 ?  (
+            <span className="text-xl bg-green-600 text-white text-center p-1">
+              Confirmo {contact[0].num_confirmation} persona (s)
+            </span>
+          ) : (
+            <span className="text-xl bg-red-600 text-white text-center p-1">No confirmo</span>
+          )}
+          </p>
           <p className="text-xl">
             {contact[0].vocative} {contact[0].name} {contact[0].last_name}
           </p>
@@ -124,7 +132,6 @@ export default function ClientComponent() {
           <p className="text-xl"> {contact[0].organization}</p>
           <p className="text-xl"> {contact[0].title}</p>
           <p className="text-xl"> {contact[0].is_entered}</p>
-          <p className="text-xl"> {contact[0].entered_num}</p>
           <div className="text-center">
             <button
               className="bg-green-600 p-4 white font-bold text-white"

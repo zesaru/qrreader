@@ -14,7 +14,7 @@ export interface Database {
           category: string | null
           created_at: string | null
           entered_at: string | null
-          entered_num: number | null
+          entered_num: number
           id: string
           invitation_date: string | null
           is_entered: boolean | null
@@ -22,6 +22,7 @@ export interface Database {
           is_vip: string | null
           last_name: string | null
           name: string
+          num_confirmation: number
           organization: string | null
           qr_code: string
           title: string | null
@@ -31,7 +32,7 @@ export interface Database {
           category?: string | null
           created_at?: string | null
           entered_at?: string | null
-          entered_num?: number | null
+          entered_num?: number
           id?: string
           invitation_date?: string | null
           is_entered?: boolean | null
@@ -39,8 +40,9 @@ export interface Database {
           is_vip?: string | null
           last_name?: string | null
           name: string
+          num_confirmation?: number
           organization?: string | null
-          qr_code?: string | null
+          qr_code: string
           title?: string | null
           vocative?: string | null
         }
@@ -56,8 +58,9 @@ export interface Database {
           is_vip?: string | null
           last_name?: string | null
           name?: string
+          num_confirmation?: number
           organization?: string | null
-          qr_code?: string | null
+          qr_code?: string
           title?: string | null
           vocative?: string | null
         }
