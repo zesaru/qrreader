@@ -14,7 +14,7 @@ async function fetchContacts(id: string) {
     throw new Error('Invalid id parameter');
   }
   try {
-    const { data } = await supabase.from('contacts').select().eq('qr_code', id);
+    const { data } = await supabase.from('contacts').select().eq('qr_code', id );
     return data;
   } catch (error) {
 
@@ -29,7 +29,10 @@ export default function ClientComponent() {
       const contacts = await fetchContacts(result);
       const name = contacts![0].name as string | null;
       const last_name = contacts![0].last_name as string | null;
-      const contactName = name + ' ' + last_name;
+      const vocative = contacts![0].vocative as string | null;
+      const is_invited = contacts![0].is_invited as string | null; 
+      const num_confirmation = contacts![0].num_confirmation as string | null; 
+      const contactName = vocative + '' + name + ' ' + last_name + ' Invitado' + is_invited + ' Numero de confirmacion' + num_confirmation;
       setName(contactName!);
     } catch (error) {
       console.log(error);
