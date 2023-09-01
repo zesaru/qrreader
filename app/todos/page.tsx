@@ -31,8 +31,13 @@ export default function ClientComponent() {
       const last_name = contacts![0].last_name as string | null;
       const vocative = contacts![0].vocative as string | null;
       const is_invited = contacts![0].is_invited as string | null; 
-      const num_confirmation = contacts![0].num_confirmation as string | null; 
-      const contactName = vocative + '' + name + ' ' + last_name + ' Invitado' + is_invited + ' Numero de confirmacion' + num_confirmation;
+      const is_vip = contacts![0].is_vip as boolean | null;
+      const num_confirmation = contacts![0].num_confirmation as number | null; 
+      const contactName = `${vocative} ${name}  ${last_name } 
+      'Invitado' ${ is_invited ? 'Invitado' : 'No Invitado' }
+      'Numero de confirmados' ${num_confirmation}
+      ${is_vip && 'VIP' }
+      `;
       setName(contactName!);
     } catch (error) {
       console.log(error);
